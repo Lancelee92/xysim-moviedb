@@ -4,6 +4,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using System.IO;
+using System.Text;
+using System.Runtime.Serialization.Json;
 using System;
 
 namespace xysim_moviedb.Data
@@ -91,6 +94,12 @@ namespace xysim_moviedb.Data
                         if (data != null)
                         {
                         Console.WriteLine(data);
+                        //themoviedbResponse JsonRtn = JsonConvert.DeserializeObject<themoviedbResponse>(data);
+                        themoviedbResponse deserializedUser = new themoviedbResponse();  
+                        MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(data));  
+                        DataContractJsonSerializer ser = new DataContractJsonSerializer(deserializedUser.GetType());  
+                        deserializedUser = ser.ReadObject(ms) as themoviedbResponse;  
+                        ms.Close();  
                         }
                     }
                 }
