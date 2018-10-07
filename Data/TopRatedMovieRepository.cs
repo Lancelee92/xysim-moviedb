@@ -17,42 +17,21 @@ namespace xysim_moviedb.Data
         {
             new Movie()
             {
-                Id = 1,
-                Name = "The Amazing Spider-Man",
-                Overview = "<p>Final issue! Witness the final hours of Doctor Octopus' life and his one, last, great act of revenge! Even if Spider-Man survives...<strong>will Peter Parker?</strong></p>",
-                OriginalTitle = "",
-                OriginalLanguage = "false",
-                ReleaseDate = "",
-                PosterPath = "",
-                VoteCount = 0, 
-                Popularity = (float)0.00,
-                VoteAverage = (float)0.00
+                id = 1,
+                title = "The Amazing Spider-Man",
+                overview = "<p>Final issue! Witness the final hours of Doctor Octopus' life and his one, last, great act of revenge! Even if Spider-Man survives...<strong>will Peter Parker?</strong></p>",
             },
             new Movie()
             {
-                Id = 1,
-                Name = "The Avengers",
-                Overview = "<p>Spider-Man survives...<strong>will Peter Parker?</strong></p>",
-                OriginalTitle = "",
-                OriginalLanguage = "false",
-                ReleaseDate = "",
-                PosterPath = "",
-                VoteCount = 0, 
-                Popularity = (float)0.00,
-                VoteAverage = (float)0.00
+                id = 1,
+                title = "The Avengers",
+                overview = "<p>Spider-Man survives...<strong>will Peter Parker?</strong></p>",
             },
             new Movie()
             {
-                Id = 1,
-                Name = "Inceptions",
-                Overview = "<p>Cobbs survives...<strong>will John Parker?</strong></p>",
-                OriginalTitle = "",
-                OriginalLanguage = "false",
-                ReleaseDate = "",
-                PosterPath = "",
-                VoteCount = 0, 
-                Popularity = (float)0.00,
-                VoteAverage = (float)0.00
+                id = 1,
+                title = "Inceptions",
+                overview = "<p>Cobbs survives...<strong>will John Parker?</strong></p>",
             }
         };
 
@@ -69,7 +48,7 @@ namespace xysim_moviedb.Data
 
             foreach(var movie in _movies)
             {
-                if(movie.Id == id)
+                if(movie.id == id)
                 {
                     movieToReturn = movie;
                 }        
