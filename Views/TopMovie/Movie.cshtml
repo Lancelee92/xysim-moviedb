@@ -1,0 +1,20 @@
+@model xysim_moviedb.Models.Movie[]
+
+@{
+    ViewData["Title"] = "Top Movies";
+}
+<h2>@ViewData["Title"]</h2>
+
+<p>Use this page to display top rated movies.</p>
+
+
+
+    <h5>Movies:</h5>
+    <div>
+        <ul>
+            @foreach(var movie in Model)
+            {
+                <li>@movie.Name</li>
+            }
+        </ul>
+    </div>
