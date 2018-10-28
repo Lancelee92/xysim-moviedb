@@ -38,7 +38,7 @@ namespace xysim_moviedb.Data
         public Movie[] GetMovies()
         {
 
-            GetData();
+            //GetData();
 
             return _movies;
         }
@@ -56,7 +56,7 @@ namespace xysim_moviedb.Data
 
             return movieToReturn;
         }
-
+/* 
         static async void GetData()
         {
             string api_key = "5ae7fe637e5f6fd654a373598bc43785";
@@ -72,7 +72,7 @@ namespace xysim_moviedb.Data
                         var data = await content.ReadAsStringAsync();
                         if (data != null)
                         {
-                        Console.WriteLine(data);
+                        //Console.WriteLine(data);
                         //themoviedbResponse JsonRtn = JsonConvert.DeserializeObject<themoviedbResponse>(data);
                         themoviedbResponse deserializedUser = new themoviedbResponse();  
                         MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(data));  
@@ -85,5 +85,6 @@ namespace xysim_moviedb.Data
 
             }
         }
+*/    
     }
 }

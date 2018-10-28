@@ -41,6 +41,7 @@
                     "command": "xdg-open"
                 }
             },
+            "requireExactSource":false,
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },

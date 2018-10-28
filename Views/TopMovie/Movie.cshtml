@@ -1,4 +1,4 @@
-@model xysim_moviedb.Models.Movie[]
+@model List<xysim_moviedb.Models.Movie>
 
 @{
     ViewData["Title"] = "Top Movies";
@@ -11,10 +11,17 @@
 
     <h5>Movies:</h5>
     <div>
-        <ul>
+        <div>
             @foreach(var movie in Model)
             {
-                <li>@movie.title</li>
+                <div>
+                    <h5>
+                        @Html.DisplayFor(modelItem => movie.title)
+                    </h5>
+                    <img src="@String.Format("https://image.tmdb.org/t/p/w500{0}", movie.poster_path)" alt="@(movie.title)">
+                </div>
             }
-        </ul>
+
+
+        </div>
     </div>
