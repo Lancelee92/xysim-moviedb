@@ -38,6 +38,8 @@ namespace xysim_moviedb.Controllers
                 //var movies = _TopRatedMovieRepository.GetMovies();
                 //Console.WriteLine(movies.GetType());                   
             //} 
+            //movies = movies.Where(s => s.popularity > 50).Take(10);
+            movies = movies.OrderByDescending(p => p.popularity).Take(10);
             var selectedMovies = await movies.ToListAsync();
             
             return View(selectedMovies);

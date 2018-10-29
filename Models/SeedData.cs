@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 using xysim_moviedb.Models;
 
 namespace xysim_moviedb
@@ -81,32 +82,63 @@ namespace xysim_moviedb
         static async Task<themoviedbResponse> GetDataTaskAsync()
         {
             string api_key = "5ae7fe637e5f6fd654a373598bc43785";
-            string language = "en-US";
-            string page = "1";
+            string language = "en-MY";
+            int page = 1;
             string api_link = "https://api.themoviedb.org/3/movie/top_rated?api_key={0}&language={1}&page={2}";
-            string req = string.Format(api_link, api_key, language, page);
-            themoviedbResponse deserializedUser = new themoviedbResponse();  
+            string req = string.Format(api_link, api_key, language, page.ToString());
+            string now_playing = "https://api.themoviedb.org/3/movie/now_playing?api_key={0}&language={1}&page={2}";
+            themoviedbResponse themoviedb = new themoviedbResponse(); 
 
-            using (HttpClient client = new HttpClient()){
-                using (HttpResponseMessage res = await client.GetAsync(req)){
+            Start:
+            string reqnp = string.Format(now_playing, api_key, language, page.ToString());
+
+            using (HttpClient client = new HttpClient()){  
+                using (HttpResponseMessage res = await client.GetAsync(reqnp)){
                     using (HttpContent content = res.Content)
                     {
                         var data = await content.ReadAsStringAsync();
                         if (data != null)
                         {
-                        //Console.WriteLine(data);
-                        //themoviedbResponse JsonRtn = JsonConvert.DeserializeObject<themoviedbResponse>(data);
-                        MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(data));  
-                        DataContractJsonSerializer ser = new DataContractJsonSerializer(deserializedUser.GetType());  
-                        deserializedUser = ser.ReadObject(ms) as themoviedbResponse;  
-                        ms.Close();  
+                            //Console.WriteLine(data);
+                            //themoviedbResponse JsonRtn = JsonConvert.DeserializeObject<themoviedbResponse>(data);
+                            themoviedbResponse deserializedUser = new themoviedbResponse();  
+                            
+                            /* LOOP HERE UNTIL GET ALL DATA */
+                            /* ADD ALL DATA AS ONE THEMOVIEDBRESPONSE */
+                            MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(data));  
+                            DataContractJsonSerializer ser = new DataContractJsonSerializer(deserializedUser.GetType());  
+                            deserializedUser = ser.ReadObject(ms) as themoviedbResponse;  
+                            ms.Close();  
+                                if(page == 1)
+                                    themoviedb = deserializedUser;
 
+                                if(page <= deserializedUser.total_pages && page != 1)
+                                {
+                                    themoviedb.page = deserializedUser.page;
+                                    //themoviedb.total_pages = deserializedUser.total_pages;
+                                    //themoviedb.total_results = deserializedUser.total_results;
+                                    //deserializedUser.results.CopyTo(mdata, mdata.Length-1);
+                                        // foreach(Movie movie in deserializedUser.results)
+                                        // {
+                                        //     Console.WriteLine(movie);
+                                        //     themoviedb.results. 
+                                        // }
+                                        themoviedb.results = themoviedb.results.Concat(deserializedUser.results).ToArray();   
+                                }
+
+                                if(page == deserializedUser.total_pages)
+                                    goto End;
+                                else{
+                                    page +=1; 
+                                    goto Start;
+                                } 
                         }
                     }
                 }
 
             }
-            return deserializedUser;
+            End:
+            return themoviedb;
         }
     }
 }
